@@ -99,17 +99,19 @@ Game 98: 2 green, 5 blue, 9 red; 4 green, 9 blue, 8 red; 7 green, 11 blue, 7 red
 Game 99: 2 green, 15 blue, 2 red; 2 red, 6 green, 12 blue; 11 green, 18 blue, 2 red; 3 red, 9 blue, 3 green; 18 blue
 Game 100: 13 red, 2 green; 15 red, 1 green; 4 green, 1 blue; 11 red, 5 green; 3 green, 8 red`
 
-function getAll(data, maxRed, maxGreen, maxBlue){
+function getAll(data, maxRed, maxGreen, maxBlue){ 
     let total = 0
     let dataArr = data.split(/\n/)
     for (let i=0; i<dataArr.length; i++){
         let data = dataArr[i].replace(':', ';').replace('Game ', '').split(';')
-        total += Number(findMax(data, maxRed, maxGreen, maxBlue)) * [i+1]
+        //total += Number(findMax(data, maxRed, maxGreen, maxBlue)) * [i+1] part 2
+        total += Number(findPowers(data, maxRed, maxGreen, maxBlue)) //part 2
     }
     return total
 }
 
-function findMax(data, maxRed, maxGreen, maxBlue){
+
+function findMax(data, maxRed, maxGreen, maxBlue){ //part 1
     let reds = []
     let blues = []
     let greens = []
@@ -130,5 +132,28 @@ function findMax(data, maxRed, maxGreen, maxBlue){
     return ((highestRed <= maxRed) && (highestGreen <= maxGreen) && (highestBlue <= maxBlue))
     
 }
+
+function findPowers(data, maxRed, maxGreen, maxBlue){ //part 2
+  let reds = []
+  let blues = []
+  let greens = []
+  for (let i=1; i<data.length; i++){
+      if (data[i].includes('red')){
+          reds.push(data[i].slice(data[i].toString().indexOf('red')-3, data[i].toString().indexOf('red')))
+          }
+      if (data[i].includes('blue')){
+          blues.push(data[i].slice(data[i].toString().indexOf('blue')-3, data[i].toString().indexOf('blue')))
+      }
+      if (data[i].includes('green')){
+          greens.push(data[i].slice(data[i].toString().indexOf('green')-3, data[i].toString().indexOf('green')))
+      }
+  }
+  const highestRed = Math.max(...reds.map( (a) => parseInt(a)))
+  const highestGreen = Math.max(...greens.map ( (a) => parseInt(a)))
+  const highestBlue = Math.max(...blues.map( (a) => parseInt(a)))
+  return(highestRed * highestGreen * highestBlue)
+  
+}
+
 
 console.log(getAll(data, 12, 13, 14))
