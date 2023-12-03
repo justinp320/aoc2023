@@ -1003,9 +1003,18 @@ const data = [
   
   
   function reduceNumbers (data){
-      const nums =  data.replace(/[^0-9]/gm, "")
-      return Number(nums[0] + nums[nums.length-1])
-  }
+    const nums1 = data.replaceAll('one', 'o1e')
+    const nums2 = nums1.replaceAll('two', 't2o')
+    const nums3 = nums2.replaceAll('three', 't3e')
+    const nums4 = nums3.replaceAll('four', 'f4r')
+    const nums5 = nums4.replaceAll('five', 'f5e')
+    const nums6 = nums5.replaceAll('six', 's6x')
+    const nums7 = nums6.replaceAll('seven', 's7n')
+    const nums8 = nums7.replaceAll('eight', 'e8t')
+    const nums9 = nums8.replaceAll('nine', 'n9e')
+    const nums = nums9.replaceAll(/[^0-9]/gm, "")
+    return Number(nums[0] + nums[nums.length-1])
+}
   
   function countNumbers(data){
       let totalCount = 0
