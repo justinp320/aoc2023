@@ -1,5 +1,4 @@
-const data = 
-`Card   1: 58 96 35 20 93 34 10 27 37 30 | 99 70 93 11 63 41 37 29  7 28 34 10 40 96 38 35 27 30 20 21  4 51 58 39 56
+const data = `Card   1: 58 96 35 20 93 34 10 27 37 30 | 99 70 93 11 63 41 37 29  7 28 34 10 40 96 38 35 27 30 20 21  4 51 58 39 56
 Card   2: 64 84 57 46 53 86 90 99 59 70 | 99 59 30 83 84 70 31 57  6 29 18 82 15 88 86 53 51 64 32 47 44 46 80 39 90
 Card   3: 55 87 51 18 86  5 66 83 92 95 | 73 68 49 57 29 14 41 42 65 10 84 34 67 44  6 48 61 13 28 38 52 19 78 64 11
 Card   4: 52 21 59 78 18 42 46 91 31 10 | 48 83 13 68 42 72  4 10  6 36 63 81 21 94  8  3 78 53  2 47 62 77 56 97  7
@@ -201,7 +200,8 @@ Card 199: 41 93 33 26 45 65 97 39 20 95 | 82  8 30  6 34 58 49 16 29 91 64 80 50
 Card 200: 86 85 91  2 27 65 45 73 60 69 | 66 26 28  7 98 80 14 52  6 35 57 46 39  4 30 55 94 75 82 83 96 13 74  9 58
 Card 201: 30 53 41 42 10 51 37 63 46 67 | 84 74 33  5 86 32 45 83 52  1 13 43 65 49 98 91  9 11 96 66 15 62 27 44 24`
 
-function findWinnings(data){
+
+function findWinnings(data){ //part 1
     let total = 0
     const dataArr = data.replaceAll('  ', ' ').replaceAll(':', ' |').split(/\n/)
     for (let i=0; i<dataArr.length; i++){
@@ -214,4 +214,22 @@ function findWinnings(data){
     return total
 }
 
-console.log(findWinnings(data))
+function findTotalCards(data){ //part 2
+    const dataArr = data.replaceAll('  ', ' ').replaceAll(':', ' |').split(/\n/)
+    const scratchers = new Array(dataArr.length).fill(1)
+    for (let i=0; i<dataArr.length; i++){
+        let cardArr = dataArr[i].split(' | ')
+        const matchingNumbers = cardArr[1].split(' ').filter((num) => cardArr[2].split(' ').includes(num) )
+        for (let j=0; j<scratchers[i]; j++){
+            for (let k=0; k<matchingNumbers.length; k++){
+                if (scratchers.length < i+1 || matchingNumbers.length > 0){
+                scratchers[i+k+1] ++
+                }
+            }
+        }
+    }
+    return scratchers.reduce((a,b) => a+b, 0)
+}
+
+console.log(findWinnings(data)) //part 1
+console.log(findTotalCards(data)) //part 2
